@@ -1,0 +1,7 @@
+  <!-- child article component in [] check article.component.ts -->
+<ul>
+  <app-article *ngFor="let a of articles"
+   [article]="a"  
+   [articleDesc]="a.description">
+  </app-article>
+</ul>
