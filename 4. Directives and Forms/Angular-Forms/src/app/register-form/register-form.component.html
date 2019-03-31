@@ -1,0 +1,113 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+      <h1>Registration Form</h1>
+      <form #registerForm="ngForm" (submit)="register(registerForm)">
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+          </div>
+          <input name="fullName" pattern="[A-Z][a-z]+ [A-Z][a-z]+" class="form-control" #fullName="ngModel"
+            placeholder="Full Name" ngModel required>
+        </div>
+        <div class="alert alert-danger" *ngIf="fullName?.touched && fullName?.errors?.required">
+          This field is required
+        </div>
+        <div class="alert alert-danger" *ngIf="fullName?.errors?.pattern">
+          Name must contain space between first and last
+        </div>
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+          </div>
+          <input name="email"
+            pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+            class="form-control" #email="ngModel" placeholder="Email Address" type="email" ngModel required>
+        </div>
+        <div class="alert alert-danger" *ngIf="email?.touched && email?.errors?.required">
+          This field is required
+        </div>
+        <div class="alert alert-danger" *ngIf="email?.errors?.pattern">
+          Invalid email
+        </div>
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+          </div>
+          <select name="phoneNumberCode" class="custom-select" style="max-width: 120px;" ngModel required>
+            <option [selected]="true" disabled>Select code</option>
+            <option value="{{phoneCode}}" *ngFor="let phoneCode of phoneCodesArray">{{phoneCode}}</option>
+          </select>
+          <input name="phoneNumber" pattern="\d{9}" class="form-control" #phoneNumber="ngModel"
+            placeholder="Phone number" type="text" ngModel required>
+        </div>
+        <div class="alert alert-danger" *ngIf="phoneNumber?.touched && phoneNumber?.errors?.required">
+          This field is required
+        </div>
+        <div class="alert alert-danger" *ngIf="phoneNumber?.errors?.pattern">
+          Phone number must be 9 digits in length
+        </div>
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+          </div>
+          <select name="jobTitle" class="form-control" #jobTitle="ngModel" ngModel required>
+            <option [selected]="true" disabled>Select one of options below</option>
+            <option value="{{job}}" *ngFor="let job of jobsArray">{{job}}</option>
+          </select>
+        </div>
+        <div class="alert alert-danger" *ngIf="jobTitle?.touched && jobTitle?.errors?.required">
+          This field is required
+        </div>
+        <div ngModelGroup="passwords">
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <input name="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$" class="form-control"
+              #password="ngModel" placeholder="Create password" type="password" ngModel required>
+          </div>
+          <div class="alert alert-danger" *ngIf="password?.touched && password?.errors?.required">
+            This field is required
+          </div>
+          <div class="alert alert-danger" *ngIf="registerForm?.controls.passwords?.controls.password?.errors?.pattern">
+            Password must contain digits and letters and must be between 8 - 16 characters in length
+          </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <input name="repeatPassword" class="form-control" #repeatPassword="ngModel" placeholder="Repeat password"
+              type="password" ngModel required>
+          </div>
+          <div class="alert alert-danger" *ngIf="repeatPassword?.touched && repeatPassword?.errors?.required">
+            This field is required
+          </div>
+          <div class="alert alert-danger" *ngIf="password?.value !== repeatPassword?.value">
+            Passwords do not match
+          </div>
+        </div>
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fas fa-image"></i> </span>
+          </div>
+          <input name="imageUrl" appImageValidator class="form-control" #imageUrl="ngModel" placeholder="Image Url"
+            type="url" ngModel required>
+        </div>
+        <div class="alert alert-danger" *ngIf="registerForm.errors?.image">
+          Image Url is invalid
+        </div>
+        <div class="form-group">
+          <button [disabled]="registerForm.invalid" type="submit" class="btn btn-primary btn-block">
+            Create Account
+          </button>
+        </div>
+        <p class="text-center">Have an account? <a href="">Log In</a> </p>
+      </form>
+    </div>
+    <div class="col-lg-4"></div>
+  </div>
+</div>
+
+{{registerForm.value | json}}
