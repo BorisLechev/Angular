@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { equal } from 'assert';
 
 @Component({
   selector: 'app-register-form-reactive',
@@ -19,7 +20,7 @@ export class RegisterFormReactiveComponent implements OnInit {
       phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       jobsSelector: ['Select one of options below', Validators.required],
       password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/)]],
-      repeatPassword: ['', Validators.required]
+      repeatPassword: ['', Validators.required],
     });
   }
 
@@ -31,7 +32,7 @@ export class RegisterFormReactiveComponent implements OnInit {
     return this.form.controls;
   }
 
-  get status() {
-    return this.form.status === "VALID" ? true : false;
+  get invalid() {
+    return this.form.invalid;
   }
 }
